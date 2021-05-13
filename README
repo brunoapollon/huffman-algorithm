@@ -1,0 +1,12 @@
+comandos:
+
+make
+
+./saida compactar arquivo.extensão
+
+./saida descompactar arquivo.extensão
+
+
+Os arquivos gerados ficam como arquivo.bruno
+
+Será informado quando a compactação começa e termina assim como para a descompactação.
