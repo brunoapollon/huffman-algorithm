@@ -8,6 +8,8 @@
 
  - Tem um arquivo makeFile para evitar.problemas, portanto execute o comando `make` e os arquivos seram processados.
 
+- O arquivo que vai ser compactado ou descompactado deve estar no diretório raiz.
+
  - O proximo passo é compactar o arquivo utilizando o comando `./saida compactar NomeDoArquivo.extensão`, o tempo de execução é proporcional ao tamanho do arquivo, quanto maior o arquivo, mais tempo leva pra ser processado.
 
  - Para descompactar o arquivo que foi compactado, você pode utilizar o comando `./saida descompactar NomeDoArquivo.extensão`. Vale lembrar que o algorítimo só descompacta arquivos que foram compactados utilizando o mesmo.
