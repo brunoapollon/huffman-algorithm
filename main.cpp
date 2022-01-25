@@ -1,4 +1,4 @@
-#include "compactaDescompacta.h"
+#include "src/compactaDescompacta.h"
 using namespace std;
 int main(int argq, char **argv)
 {

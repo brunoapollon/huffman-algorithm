@@ -4,7 +4,7 @@ using namespace std;
 
 template <class T>
 
-class heap{
+class Heap{
   T *data;
   int n, m;
   void swap(int i, int j){
@@ -42,7 +42,7 @@ class heap{
   }
 
 public:
-  heap(int n)
+  Heap(int n)
   {
     this->n = n;
     m = 0;
@@ -72,15 +72,15 @@ public:
   {
     return data[i];
   }
-  ~heap()
+  ~Heap()
   {
     delete[] data;
   }
 };
 template <class T>
-void heapsort(T *u, int n)
+void heapSort(T *u, int n)
 {
-  heap<int> h(n);
+  Heap<int> h(n);
   for (int i = 0; i < n; i++)
     h.push(u[i]);
   for (int i = 0; h.len() > 0; i++)

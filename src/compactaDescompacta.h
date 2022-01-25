@@ -5,10 +5,10 @@
 #include <stack>
 #include <queue>
 #include <bitset>
-#include "heap.h"
-#include "tree.h"
+#include "Heap.h"
+#include "Tree.h"
 
-nodo CreateTreeCompact(string arquivo){
+Node CreateTreeCompact(string arquivo){
   int vet[256];
 
   for (int i = 0; i < 256; i++){
@@ -41,37 +41,37 @@ nodo CreateTreeCompact(string arquivo){
       tamHeap++;
     }
   }
-  stack<nodo> pilha;
+  stack<Node> pilha;
   for (int i = 0; i < 256; i++){
     if (vet[i] != 0){
-      nodo no(vet[i], i);
+      Node no(vet[i], i);
       pilha.push(no);
       cont++;
     }
   }
   
-  heap<nodo> heapAux(cont);
+  Heap<Node> heapAux(cont);
   for (int i = 0; i < cont; i++){
     heapAux.push(pilha.top());
     pilha.pop();
   }
 
-  nodo lAux, rAux;
+  Node lAux, rAux;
   while (heapAux.len() > 1){
     lAux = heapAux.pop();
     rAux = heapAux.pop();
-    nodo no(&lAux, &rAux);
+    Node no(&lAux, &rAux);
     heapAux.push(no);
   }
 
   rAux = heapAux.pop();
-  nodo retorno = new nodo(rAux);
+  Node retorno = new Node(rAux);
 
   return retorno;
 }
 
 
-nodo *CreateTreeDescompact(string arquivo){
+Node *CreateTreeDescompact(string arquivo){
 
   int contStop = 0, contBarras = 0, contPontoVirgulas = 0;
   char aux;
@@ -82,7 +82,7 @@ nodo *CreateTreeDescompact(string arquivo){
     vetor[i] = "";
   }
 
-  nodo *retorno = new nodo();
+  Node *retorno = new Node();
   ifstream myfile(arquivo.c_str(), ifstream::binary);
   myfile.read(&aux, 1);
 
@@ -125,13 +125,13 @@ nodo *CreateTreeDescompact(string arquivo){
   }
 
   for (int i = 0; i < 256; i++){
-    nodo *aux = retorno;
+    Node *aux = retorno;
     sequence = vetor[i];
 
     for (int j = 0; j < sequence.length(); j++){
       if (sequence[j] == '0'){
         if (aux->left == 0){
-          nodo *temp = new nodo();
+          Node *temp = new Node();
           aux->left = temp;
           aux = aux->left;
         }
@@ -141,7 +141,7 @@ nodo *CreateTreeDescompact(string arquivo){
       }
       else{
         if (aux->right == 0){
-          nodo *temp = new nodo();
+          Node *temp = new Node();
           aux->right = temp;
           aux = aux->right;
         }
@@ -158,7 +158,7 @@ nodo *CreateTreeDescompact(string arquivo){
   myfile.close();
   return retorno;
 }
-void codigoCarac(nodo *no, string sequence, string vet[])
+void codigoCarac(Node *no, string sequence, string vet[])
 {
   if (no->left == 0 && no->right == 0)
   {
@@ -269,12 +269,12 @@ void compactar(string nomeArquivo){
   cout << "Compactando o arquivo..." << endl;
 
   int soma = 0, cont = 0, tamTabela;
-  tree *arvore = new tree(CreateTreeCompact(nomeArquivo));
+  Tree *arvore = new Tree(CreateTreeCompact(nomeArquivo));
   string sequence = "", by = "";
   string vetor[256];
-  codigoCarac(arvore->getNodoRaiz(), sequence, vetor);
+  codigoCarac(arvore->getNodeRaiz(), sequence, vetor);
   ofstream myFileOutput(retornaArqSaida(nomeArquivo).c_str(), ofstream::binary);
-  myFileOutput << arvore->getNodoRaiz()->freq << '/';
+  myFileOutput << arvore->getNodeRaiz()->freq << '/';
   myFileOutput << retornaExtensaoArq(nomeArquivo) << '/';
   tamTabela = quantidadePosComValor(vetor);
 
@@ -375,12 +375,12 @@ void descompactar(string nomeArquivo){
 
   cout << "Descompactando o arquivo..." << endl;
 
-  tree *arvore = new tree(CreateTreeDescompact(nomeArquivo));
+  Tree *arvore = new Tree(CreateTreeDescompact(nomeArquivo));
   string nomeDescompact = retornaNome(nomeArquivo), sequence = "";
   char aux;
   bool achouCarac = false;
   unsigned char bAux;
-  nodo *no;
+  Node *no;
   int quantCaracteres, contCarac = 0, fimTable = 0;
   queue<char> fila;
   ofstream myfileOutput(nomeDescompact.c_str(), ofstream::binary);
@@ -411,7 +411,7 @@ void descompactar(string nomeArquivo){
   }
   quantCaracteres = stoi(sequence);
   myfileInput.read(&aux, 1);
-  no = arvore->getNodoRaiz();
+  no = arvore->getNodeRaiz();
 
   while (!myfileInput.eof()){
     bAux = aux;
@@ -431,7 +431,7 @@ void descompactar(string nomeArquivo){
         no = no->left;
         if (no->left == 0 && no->right == 0){
           myfileOutput << no->caractere;
-          no = arvore->getNodoRaiz();
+          no = arvore->getNodeRaiz();
           contCarac++;
         }
       }
@@ -442,7 +442,7 @@ void descompactar(string nomeArquivo){
         if (no->left == 0 && no->right == 0){
 
           myfileOutput << no->caractere;
-          no = arvore->getNodoRaiz();
+          no = arvore->getNodeRaiz();
           contCarac++;
         }
       }
